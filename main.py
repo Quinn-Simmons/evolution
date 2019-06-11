@@ -5,8 +5,6 @@ import os
 #global vars
 
 
-
-
 class Environment:
   def __init__(self,h,w, numAnimals):
     self.h = h
@@ -33,8 +31,35 @@ class Environment:
 
   def update(self):
     for animal in self.animals:
+
+
+      if(type(self.grid[animal.location[0]][animal.location[1]]) == "Food"):
+        
+
+      
       self.grid[animal.location[0]][animal.location[1]] = ","
       #this is where the code for the animals eating food will go
+
+
+      #remove the food we run over from the food array 
+
+
+
+      for x in range(animal.location[0] - 1, animal.location[0] + 1):
+        for y in range (animal.location[1] - 1, animal.location[1] + 1):
+          if type(self.grid[x][y]) == "Food":
+            if self.grid[x][y].objType == "food":
+              print("found food")
+
+
+
+
+
+
+
+
+
+
       animal.update()
       self.grid[animal.location[0]][animal.location[1]] = animal.char
     self.displayEnv()
@@ -58,6 +83,7 @@ class Animal:
     self.char = char
     self.location = location
     self.eaten = 0
+    self.objType = "animal"
 
   def move(self):
     self.location[0] += random.randint(-1, 1)
@@ -72,6 +98,7 @@ class Food:
     self.location = location
     self.nutrition = random.randint(1,2)
     self.growing = True
+    self.objType = "food"
   def update(self):
     if self.growing == True:
       self.nutition += 1
@@ -95,7 +122,7 @@ simTime = 120
 
 while(simTime > 0):
   env1.update()
-  time.sleep(1)
+  time.sleep(0.1)
  
   os.system('clear')
   simTime-=1
